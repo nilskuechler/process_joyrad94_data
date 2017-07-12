@@ -35,12 +35,12 @@ for i = 1:ss(1)
     end
     
     % check if aliasing occured by checking if more than 'frac' percent of the bins exceeded
-    % pnf on both ends of the spectra
+    % mean noise leveöl at one of the spectra
     frac = 5;    
     frac = ceil(Nfft/100*frac);
     
-    n_start = sum(spec(i,1:frac+1) > noise.peaknoise(i));
-    n_end = sum(spec(i,Nfft-frac:Nfft) > noise.peaknoise(i));
+    n_start = sum(spec(i,1:frac+1) > noise.meannoise(i));
+    n_end = sum(spec(i,Nfft-frac:Nfft) > noise.meannoise(i));
     
     if n_start >= frac || n_end >= frac % then aliasing detected 
         alias_flag(i) = 1;
