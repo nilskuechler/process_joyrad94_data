@@ -1,6 +1,6 @@
 # process_joysrad94_data
 
-author: Nils Küchler
+author: Nils Küchler\\
 contact: nkuech@meteo.uni-koeln.de
 
 # what does the software?
