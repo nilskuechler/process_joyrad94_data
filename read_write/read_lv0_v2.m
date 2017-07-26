@@ -204,7 +204,7 @@ function data = read_lv0_v2(infile)
                 
                 % spectra
                 if data.CompEna == 0 
-                    
+
                     data.spec(i,j,1:data.DoppLen(chirp_idx)) = fread(fid,[1,data.DoppLen(chirp_idx)],'single'); % spectra
                     if data.DualPol > 0
                         data.spec_h(i,j,1:data.DoppLen(chirp_idx)) = fread(fid,[1,data.DoppLen(chirp_idx)],'single'); % spectra 
