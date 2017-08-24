@@ -28,8 +28,8 @@ compact_flag = 2;
 moments_cal = 'dealias';
 
 for ii = 2017:2017 % year
-    for iii = 6:6%1:12 % month
-        for iv = 20:20%1:31 % day
+    for iii = 7:7%1:12 % month
+        for iv = 1:13%1:31 % day
                 
             time_today = [ii, iii, iv, 0, 0, 0];
             

@@ -71,19 +71,19 @@ function data = read_netcdf_v1(infile)
     data.modelno = 0;
     
     if numel(data.range) == 1021 % then high res mode was on
-        data.SeqAvg = [4096, 3072, 2304, 1792]; % number of averaged chirps within a sequence
+        data.SeqAvg = int32([4096, 3072, 2304, 1792]); % number of averaged chirps within a sequence
         data.SeqIntTime = [0.530, 0.590, 0.731, 0.568]; % effective sequence integration time [sec]
-        data.nAvg = data.SeqAvg./double(data.DoppLen); % number of spectral averages
+        data.nAvg = data.SeqAvg./data.DoppLen; % number of spectral averages
         data.progname = 'High Res';
     elseif numel(data.range) == 388
-        data.SeqAvg = [4096, 4096, 4096, 9216]; % number of averaged chirps within a sequence
+        data.SeqAvg = int32([4096, 4096, 4096, 9216]); % number of averaged chirps within a sequence
         data.SeqIntTime = [0.338, 0.402, 0.530, 1.769]; % effective sequence integration time [sec]
-        data.nAvg = data.SeqAvg./double(data.DoppLen); % number of spectral averages
+        data.nAvg = data.SeqAvg./data.DoppLen; % number of spectral averages
         data.progname = 'Doppler 3 sec';
     else
-        data.SeqAvg = NaN(1,4); % number of averaged chirps within a sequence
-        data.SeqIntTime = NaN(1,4); % effective sequence integration time [sec]
-        data.nAvg = NaN(1,4); % number of spectral averages
+        data.nAvg = int32(ones(1,data.no_chirp_seq)*5); % number of spectral averages
+        data.SeqAvg = data.nAvg.*data.DoppLen; % number of averaged chirps within a sequence
+        data.SeqIntTime = zeros(1,data.no_chirp_seq); % effective sequence integration time [sec]
         data.progname = 'Unknown';
     end
     
