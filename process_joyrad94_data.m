@@ -118,6 +118,10 @@ function process_joyrad94_data(infile,outfile,code,compact_flag,varargin)
         else
             data.MSL = 111. + 19.5 + 1; % height above sea level + height of platform above ground + height of dish above platform            
         end
+        
+    elseif code == 889346 && isempty(strfind(infile,'.nc')) % then it is a binary file that contains variable created with radar software version 3.5
+        
+        data = read_lv0_v3(infile);
        
     else
         disp(['netcdf cannot be created for this file type. skipping ' infile])

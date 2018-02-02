@@ -45,17 +45,7 @@ id_freq = netcdf.defVar(ncid,'freq','nc_float',did_scalar);
 netcdf.putAtt(ncid,id_freq,'long_name','Transmission frequency');
 netcdf.putAtt(ncid,id_freq,'units','GHz');
 
-id_PowLev = netcdf.defVar(ncid,'power_leveling_flag','nc_int',did_scalar);
-netcdf.putAtt(ncid,id_PowLev,'long_name','Power leveling');
-netcdf.putAtt(ncid,id_PowLev,'comment','flag indicating, if power levelling has been used (0=yes, 1=no)');
 
-id_spike_filter = netcdf.defVar(ncid,'sike_filter_flag','nc_int',did_scalar);
-netcdf.putAtt(ncid,id_spike_filter,'long_name','Power leveling');
-netcdf.putAtt(ncid,id_spike_filter,'comment','flag indicating, if if spike/plankton filter has been used (0=yes, 1=no)');
-
-id_noise_filter = netcdf.defVar(ncid,'noise_filter_threshold','nc_float',did_scalar);
-netcdf.putAtt(ncid,id_noise_filter,'long_name','Noise filter threshold');
-netcdf.putAtt(ncid, id_noise_filtre, 'noise filter threshold factor (multiple of STD in Doppler spectra)');
 
 %%%%%%% range variables
 
@@ -173,9 +163,6 @@ netcdf.putVar(ncid,id_freq,0,data.freq);
 netcdf.putVar(ncid,id_lon,0,data.Lon);
 netcdf.putVar(ncid,id_lat,0,data.Lat);
 netcdf.putVar(ncid,id_MSL,0,data.MSL);
-netcdf.putVar(ncid, id_PowLev, 0, data.SupPowLev);
-netcdf.putVar(ncid, id_spike_filter, 0, data.SpkFilEna);
-netcdf.putVar(ncid, id_noise_filter, 0, data.NoiseFilt);
 
 % range dependet
 netcdf.putVar(ncid,id_range,0,data.n_levels,data.range);

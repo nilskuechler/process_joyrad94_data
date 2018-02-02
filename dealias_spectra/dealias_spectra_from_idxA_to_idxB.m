@@ -60,7 +60,7 @@ for ii = idxA:inc:idxB %
 %     end
     % ############## get spec and vel chains
     
-    vel_chain = (vel(1,r_idx) - 2*Nfft(r_idx)*delv(r_idx)) : delv(r_idx) : (vel(Nfft(r_idx),r_idx)+2*Nfft(r_idx)*delv(r_idx));    
+    vel_chain = (vel(1,r_idx) - 2*Nfft(r_idx)*delv(r_idx)) : delv(r_idx) : (vel(Nfft(r_idx),r_idx)+2*Nfft(r_idx)*delv(r_idx) + delv(r_idx));    
     
     % check if chrip boundary is approached
     [~,idx] = min(abs(ii-range_offsets));
