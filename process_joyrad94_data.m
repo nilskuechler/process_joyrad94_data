@@ -121,7 +121,13 @@ function process_joyrad94_data(infile,outfile,code,compact_flag,varargin)
         
     elseif code == 889346 && isempty(strfind(infile,'.nc')) % then it is a binary file that contains variable created with radar software version 3.5
         
+        software = 3;        
+        
         data = read_lv0_v3(infile);
+        
+        if ne(data.CompEna,0) && cal_mom == 1 % spectra are compressed, dealiasing not possible, take from LV1 files if available
+            cal_mom = 3;
+        end
        
     else
         disp(['netcdf cannot be created for this file type. skipping ' infile])
@@ -225,14 +231,31 @@ function process_joyrad94_data(infile,outfile,code,compact_flag,varargin)
     
     
     if cal_mom == 3
-        % check if LV1 exists
-        infile_lv1 = [infile(1:end-1) '1'];
-        if exist(infile_lv1,'file') == 2
-            data_lv1_v2 = read_lv1_v2(infile_lv1);
-            data_lv1_v2 = fill2nan_struct(data_lv1_v2,-999.);
-        else  % file does not exist, calculate moments from spectra
-            cal_mom = 2;
-        end
+        
+        if filecode == 789346
+            
+            % check if LV1 exists
+            infile_lv1 = [infile(1:end-1) '1'];
+            if exist(infile_lv1,'file') == 2
+                data_lv1_v2 = read_lv1_v2(infile_lv1);
+                data_lv1_v2 = fill2nan_struct(data_lv1_v2,-999.);
+            else  % file does not exist, calculate moments from spectra
+                cal_mom = 2;
+            end
+            
+        elseif filecode == 889346
+            
+            % check if LV1 exists
+            infile_lv1 = [infile(1:end-1) '1'];
+            if exist(infile_lv1,'file') == 2
+                data_lv1_v2 = read_lv1_v3(infile_lv1);
+                data_lv1_v2 = fill2nan_struct(data_lv1_v2,-999.);
+            else  % file does not exist, calculate moments from spectra
+                cal_mom = 2;
+            end
+            
+        end % if filecode
+        
     end
         
        
@@ -378,7 +401,7 @@ function process_joyrad94_data(infile,outfile,code,compact_flag,varargin)
         data.Aliasmask(idx) = NaN;
         
         
-    elseif cal_mom == 3 && software == 2 % take moments from RPG lv1_v2-file
+    elseif cal_mom == 3 && software >= 2 % take moments from RPG lv1_v2-file
         
         data.Ze = data_lv1_v2.Ze;
         data.vm = data_lv1_v2.vm;
